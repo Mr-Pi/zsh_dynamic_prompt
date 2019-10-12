@@ -39,7 +39,7 @@ function __pre_cmd_prompt() {
 	__prompt_cmd_start="$EPOCHSECONDS"
 	__prompt_cmd_started="$1"  # safe currect command, for later user
 	local cmd_lines="$(wc -l <<<"$__prompt_cmd_started")"  # calculate the number of new lines in current command
-	echo -n "[s[99999D[${cmd_lines}A[0;1;32m╰[0m[u"  # redraw first char in promptline
+	echo -n "[s[1G[${cmd_lines}A[0;1;32m╰[0m[u"  # redraw first char in promptline
 }
 function __post_cmd_prompt() {
 	local err_code="$?"
