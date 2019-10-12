@@ -10,6 +10,100 @@ function __prompt_time_min_function() {
 }
 
 
+# standart exit codes
+# ===================
+
+function exit_code_to_name() {
+	local exit_code_name=""
+	case "$1" in
+		64) exit_code_name="EX_USAGE";;
+		65) exit_code_name="EX_DATAERR";;
+		66) exit_code_name="EX_NOINPUT";;
+		67) exit_code_name="EX_NOUSER";;
+		68) exit_code_name="EX_NOHOST";;
+		69) exit_code_name="EX_UNAVAILABLE";;
+		70) exit_code_name="EX_SOFTWARE";;
+		71) exit_code_name="EX_OSERR";;
+		72) exit_code_name="EX_OSFILE";;
+		73) exit_code_name="EX_CANTCREAT";;
+		74) exit_code_name="EX_IOERR";;
+		75) exit_code_name="EX_TEMPFAIL";;
+		76) exit_code_name="EX_PROTOCOL";;
+		77) exit_code_name="EX_NOPERM";;
+		78) exit_code_name="EX_CONFIG";;
+		126) exit_code_name="Command invoked cannot execute";;
+		127) exit_code_name="command not found";;
+		128) exit_code_name="Invalid argument to exit";;
+		129) exit_code_name="SIGHUP";;
+		130) exit_code_name="SIGINT";;
+		131) exit_code_name="SIGQUIT";;
+		132) exit_code_name="SIGILL";;
+		133) exit_code_name="SIGTRAP";;
+		134) exit_code_name="SIGABRT";;
+		135) exit_code_name="SIGIOT";;
+		136) exit_code_name="SIGBUS";;
+		137) exit_code_name="SIGFPE";;
+		138) exit_code_name="SIGKILL";;
+		139) exit_code_name="SIGUSR1";;
+		140) exit_code_name="SIGSEGV";;
+		141) exit_code_name="SIGUSR2";;
+		142) exit_code_name="SIGPIPE";;
+		143) exit_code_name="SIGALRM";;
+		144) exit_code_name="SIGTERM";;
+		145) exit_code_name="SIGSTKFLT";;
+		146) exit_code_name="SIGCHLD";;
+		147) exit_code_name="SIGCONT";;
+		148) exit_code_name="SIGSTOP";;
+		149) exit_code_name="SIGTSTP";;
+		150) exit_code_name="SIGTSTP";;
+		151) exit_code_name="SIGTTIN";;
+		152) exit_code_name="SIGTTOU";;
+		153) exit_code_name="SIGURG";;
+		154) exit_code_name="SIGXCPU";;
+		155) exit_code_name="SIGXFSZ";;
+		156) exit_code_name="SIGVTALRM";;
+		157) exit_code_name="SIGPROF";;
+		158) exit_code_name="SIGWINCH";;
+		159) exit_code_name="SIGIO";;
+		160) exit_code_name="SIGPOLL";;
+		161) exit_code_name="SIGPWR";;
+		162) exit_code_name="SIGSYS";;
+		163) exit_code_name="SIGRTMIN";;
+		164) exit_code_name="SIGRTMIN+1";;
+		165) exit_code_name="SIGRTMIN+2";;
+		166) exit_code_name="SIGRTMIN+3";;
+		167) exit_code_name="SIGRTMIN+4";;
+		168) exit_code_name="SIGRTMIN+5";;
+		169) exit_code_name="SIGRTMIN+6";;
+		170) exit_code_name="SIGRTMIN+7";;
+		171) exit_code_name="SIGRTMIN+8";;
+		172) exit_code_name="SIGRTMIN+9";;
+		173) exit_code_name="SIGRTMIN+10";;
+		174) exit_code_name="SIGRTMIN+11";;
+		175) exit_code_name="SIGRTMIN+12";;
+		176) exit_code_name="SIGRTMIN+13";;
+		177) exit_code_name="SIGRTMIN+14";;
+		178) exit_code_name="SIGRTMIN+15";;
+		179) exit_code_name="SIGRTMIN+16";;
+		180) exit_code_name="SIGRTMIN+17";;
+		181) exit_code_name="SIGRTMIN+18";;
+		182) exit_code_name="SIGRTMIN+19";;
+		183) exit_code_name="SIGRTMIN+20";;
+		184) exit_code_name="SIGRTMIN+21";;
+		185) exit_code_name="SIGRTMIN+22";;
+		186) exit_code_name="SIGRTMIN+23";;
+		187) exit_code_name="SIGRTMIN+24";;
+		188) exit_code_name="SIGRTMIN+25";;
+		189) exit_code_name="SIGRTMIN+26";;
+		190) exit_code_name="SIGRTMIN+27";;
+		191) exit_code_name="SIGRTMIN+28";;
+		192) exit_code_name="SIGRTMIN+29";;
+		193) exit_code_name="SIGRTMIN+30";;
+	esac
+	echo "$exit_code_name"
+}
+
+
 # Append hostname on ssh connections
 if [ -n "$SSH_CONNECTION" ]; then
 	__prompt_hostname="@$HOST"
