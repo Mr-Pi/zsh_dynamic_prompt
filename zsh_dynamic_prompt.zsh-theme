@@ -1,5 +1,5 @@
 __prompt_time_min=10
-
+__prompt_startup=true
 
 # allow user defined __prompt_time_min_function function
 # ======================================================
@@ -222,7 +222,8 @@ function __post_cmd_prompt() {
 
 	__prompt_cmd_started=""
 }
-__pre_cmd_prompt "..."
+__prompt_cmd_started="# started"
+__prompt_cmd_start="$EPOCHSECONDS"
 __post_cmd_prompt
 PROMPT="%{[1;32m%}├─ %{[0;32m%}$__prompt_nix_shell%{[0;32m%}$__prompt_user%{[1;32m%}$__prompt_hostname%(!.%{[1;31m%}#.%{[1;32m%}$) %{[0m%}"
 add-zsh-hook preexec __pre_cmd_prompt
