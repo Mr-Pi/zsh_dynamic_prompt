@@ -1,13 +1,13 @@
 __prompt_time_min=10
 
 
-function __prompt_time_min_function() {
-	local cmd="$1" cmd_time="$2" ignore_cmd
-	for ignore_cmd in "bash" "nix-shell" "vim" "less" "man" "sleep" "htop"; do
-		[[ "$cmd" =~ "^$ignore_cmd" ]] && return 0
-	done
-	dunstify --appname="cmd_notify" -t 4000 -u normal "command: $cmd" "command $cmd has finished after $cmd_time."
-}
+# allow user defined __prompt_time_min_function function
+# ======================================================
+if ! builtin which __prompt_time_min_function &>/dev/null; then
+	function __prompt_time_min_function() {
+		return 0
+	}
+fi
 
 
 # standart exit codes
