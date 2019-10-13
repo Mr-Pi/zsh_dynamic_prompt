@@ -104,6 +104,14 @@ function exit_code_to_name() {
 }
 
 
+# ansifilter to remove escape sequences
+# =====================================
+
+if ! builtin which ansifilter &>/dev/null; then
+	alias ansifilter='sed "s/\[[0-9;]*[a-zA-Z]//g"'
+fi
+
+
 # Append hostname on ssh connections
 if [ -n "$SSH_CONNECTION" ]; then
 	__prompt_hostname="@$HOST"
