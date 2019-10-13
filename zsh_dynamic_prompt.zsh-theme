@@ -129,7 +129,7 @@ else
 fi
 
 # Allow commandline comments
-if [ "${__prompt_allow_comments:-true}" = false ]; then
+if [ "${__prompt_allow_comments:-true}" = true ]; then
 	set -k
 fi
 
