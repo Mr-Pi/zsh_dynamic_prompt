@@ -156,7 +156,7 @@ function __post_cmd_prompt() {
 		m="$((__prompt_last_cmd_runtime/60-h*60))"
 		s="$((__prompt_last_cmd_runtime%60))"
 		command_time="$(printf "%d:%02d:%02d" "$h" "$m" "$s")"
-		__prompt_time_min_function "$__prompt_cmd_started" "$command_time"
+		__prompt_time_min_function "$__prompt_cmd_started" "$command_time" "$err_code"
 	fi
 
 	local err_msg
