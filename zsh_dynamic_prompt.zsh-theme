@@ -225,7 +225,7 @@ function __post_cmd_prompt() {
 __prompt_cmd_started="# started"
 __prompt_cmd_start="$EPOCHSECONDS"
 __post_cmd_prompt
-PROMPT="%{[1;32m%}├─ %{[0;32m%}$__prompt_nix_shell%{[0;32m%}$__prompt_user%{[1;32m%}$__prompt_hostname%(!.%{[1;31m%}#.%{[1;32m%}$) %{[0m%}"
+PS1="%{[1;32m%}├─ %{[0;32m%}$__prompt_nix_shell%{[0;32m%}$__prompt_user%{[1;32m%}$__prompt_hostname%(!.%{[1;31m%}#.%{[1;32m%}$) %{[0m%}"
 add-zsh-hook preexec __pre_cmd_prompt
 add-zsh-hook precmd __post_cmd_prompt
 
