@@ -165,7 +165,7 @@ zle -N zle-line-init __zle_keymap_select
 # Pre command hook
 function __pre_cmd_prompt() {
 	__prompt_cmd_start="$EPOCHSECONDS"
-	__prompt_cmd_started="$1"  # safe currect command, for later user
+	__prompt_cmd_started="$1"  # safe currect command, for later usage
 	local cmd_lines="$(wc -l <<<"$__prompt_cmd_started")"  # calculate the number of new lines in current command
 	echo -n "[s[1G[${cmd_lines}A[0;1;32m╰[0m[u"  # redraw first char in promptline
 }
@@ -197,6 +197,10 @@ function __post_cmd_prompt() {
 	git_modified="$(grep "^[ ]\?M" <<<"$git_status" | wc -l)"
 	git_deleted="$(grep "^[ ]\?D" <<<"$git_status" | wc -l)"
 	git_untracked="$(grep "^[ ]\??" <<<"$git_status" | wc -l)"
+	git_hash="$(git rev-parse --short HEAD 2>/dev/null)"
+	if [ "$(head -n1 <<< "$git_status" | cut -d ' ' -f 3,4)" = "(no branch)" ]; then
+		git_branch="$(git show --summary | head -n1 | cut -c 8-14)"
+	fi
 
 	local r_prompt="" git_line=""
 	if [ -n "$git_branch" ]; then
@@ -207,8 +211,10 @@ function __post_cmd_prompt() {
 		git_line+=" [1;35m◀"
 		git_line+="[1;33m$git_branch"
 		[ -n "$git_branch_remote" ] && git_line+="|[0;3;33m$git_branch_remote"
-		git_line+="[1;35m▶[0m [1;32m─"
+		git_line+="[1;35m▶[0m"
+		git_line+=" [1;32m─"
 		r_prompt+="$git_line"
+		l_git_line="[1;3;38;2;0;125;255m$git_hash"
 	fi
 	if [ "$err_code" -gt 0 ]; then
 		[ -n "$err_msg" ] && err_msg=" $err_msg"
@@ -224,20 +230,20 @@ function __post_cmd_prompt() {
 	cols="$((cols-${#r_prompt_no_ansi}))"
 
 	echo -ne "\e[1;32m"
-	printf "%*s" "$cols" "" | sed "s/ /─/g"
+	printf "%*s" "$cols" "" | sed "s/ /─/g"  # draw full hr line
 	echo -n "$r_prompt"
 
-	if [ $((${#r_prompt_no_ansi}+${#PWD}+${#command_time}+6)) -gt "$COLUMNS" ]; then
-		echo -e "\r\e[0;1;32m╭─"
-		[ -n "$command_time" ] && echo -e "\e[0;1;32m├─ \e[0;32m\e[0;1;38;5;130m$command_time"
-		echo -e "\e[0;1;32m├─ \e[0;32m\e[0;38;5;246m$PWD"
+	if [ $((${#r_prompt_no_ansi}+${#PWD}+${#command_time}+6)) -gt "$COLUMNS" ]; then  # if line to long
+		printf "\r[0;1;32m╭─"
+		[ -n "$l_git_line" ]   && printf "[1;32m╢$l_git_line[1;32m╟"
+		printf "\n"
+		[ -n "$command_time" ] && printf "[0;1;32m├─ [0;32m[0;1;38;5;130m$command_time\n"
+		printf "[0;1;32m├─ [0;32m[0;38;5;246m$PWD\n"
 		RPS1="%{[0;38;5;246m%}%~%{[0m%}"
-	else
-		if [ -n "$command_time" ]; then
-			printf "\r\e[0;1;32m╭─\e[0m \e[0;38;5;246m${PWD} \e[0;1;32m─\e[0;1;38;5;130m $command_time \e[0m\n" "$h" "$m" "$s"
-		else
-			printf "\r\e[0;1;32m╭─\e[0m \e[0;38;5;246m${PWD} \e[0m\n" "$h" "$m" "$s"
-		fi
+	else  # line not to long
+		[ -n "$command_time" ] && command_time="\e[0;1;32m─\e[0;1;38;5;130m $command_time "
+		[ -n "$l_git_line" ]   && l_git_line="[1;32m───╢$l_git_line[1;32m╟"
+		printf "\r\e[0;1;32m╭─\e[0m \e[0;38;5;246m${PWD} $l_git_line$command_time\e[0m\n" "$h" "$m" "$s"
 		RPS1="%{[0;38;5;246m%}%~%{[0m%} %D{%H:%M:%S}"
 	fi
 	if [ -n "${NIX_SHELL_PACKAGES+1}" ]; then
