@@ -136,6 +136,32 @@ fi
 # Load zsh/datetime to determinate command execution time
 zmodload zsh/datetime
 
+function __zle_keymap_select() {
+	local indicator=""
+	case "$KEYMAP" in
+		"emacs"|"viins"|"main")
+			indicator=" [40;32mINSERT[0m"
+			;;
+		"vicmd")
+			indicator="[41;33;1mCOMMAND[0m"
+			;;
+		"viopp")
+			indicator="[45;37mSPECIAL[0m"
+			;;
+		"visual")
+			indicator=" [43;30mVISUAL[0m"
+			;;
+		*)
+			indicator="[41;37;5mUNKNOWN[0m"
+			;;
+	esac
+	local indicator_no_ansi="$(ansifilter <<<"$indicator")"
+	echo -ne "\e[s\e[1;$((COLUMNS-${#indicator_no_ansi}+1))H${indicator}\e[u"
+}
+# do not just to show current vim mode if already defined by another plugin
+zle -l | grep -q zle-keymap-select || zle -N zle-keymap-select __zle_keymap_select
+zle -N zle-line-init __zle_keymap_select
+
 # Pre command hook
 function __pre_cmd_prompt() {
 	__prompt_cmd_start="$EPOCHSECONDS"
