@@ -215,6 +215,8 @@ function __post_cmd_prompt() {
 		git_line+=" [1;32m─"
 		r_prompt+="$git_line"
 		l_git_line="[1;3;38;2;0;125;255m$git_hash"
+	else
+		l_git_line=""
 	fi
 	if [ "$err_code" -gt 0 ]; then
 		[ -n "$err_msg" ] && err_msg=" $err_msg"
