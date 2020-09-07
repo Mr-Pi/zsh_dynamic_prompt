@@ -236,7 +236,7 @@ function __post_cmd_prompt() {
 	printf "%*s" "$cols" "" | sed "s/ /─/g"  # draw full hr line
 	echo -n "$r_prompt"
 
-	if [ $((${#r_prompt_no_ansi}+${#PWD}+${#command_time}+6)) -gt "$COLUMNS" ]; then  # if line to long
+	if [ $((${#r_prompt_no_ansi}+${#PWD}+${#command_time}+20)) -gt "$COLUMNS" ]; then  # if line to long
 		printf "\r[0;1;32m╭─"
 		[ -n "$l_git_line" ]   && printf "[1;32m╢$l_git_line[1;32m╟"
 		printf "\n"
