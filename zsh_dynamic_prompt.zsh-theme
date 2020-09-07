@@ -249,7 +249,13 @@ function __post_cmd_prompt() {
 		printf "\r\e[0;1;32m╭─\e[0m \e[0;38;5;246m${PWD} $l_git_line$command_time\e[0m\n" "$h" "$m" "$s"
 		RPS1="%{[0;38;5;246m%}%~%{[0m%} %D{%H:%M:%S}"
 	fi
-	if [ -n "${NIX_SHELL_PACKAGES+1}" ]; then
+
+	# nix-shell handling
+	if [ -z "$__prompt_nix_shell_packages" ] && [ -n "$NIX_SHELL_PACKAGES" ]; then
+		__prompt_nix_shell_packages="$NIX_SHELL_PACKAGES"
+		printf "[0;1;32m├─ [0;32m[0;1mnix-packages: [0m$NIX_SHELL_PACKAGES\n"
+	fi
+	if [ -n "$IN_NIX_SHELL" ]; then
 		__prompt_nix_shell="%{[1;32m%}[%{[0;3;38;5;28m%}NIX-SHELL%{[0;1;32m%}] "
 	else
 		__prompt_nix_shell=""
