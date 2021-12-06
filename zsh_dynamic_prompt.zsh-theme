@@ -212,7 +212,7 @@ function __post_cmd_prompt() {
 		git_line+=" [1;35m◀"
 		git_line+="[1;33m$git_branch"
 		[ -n "$git_branch_remote" ] && git_line+="|[0;3;33m$git_branch_remote"
-		git_line+="[1;35m▶[0m"
+		git_line+="[0;1;35m▶[0m"
 		git_line+=" [1;32m─"
 		r_prompt+="$git_line"
 		l_git_line="[1;3;38;2;0;125;255m$git_hash"
