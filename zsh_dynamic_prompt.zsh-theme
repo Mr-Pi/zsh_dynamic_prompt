@@ -238,14 +238,14 @@ function __post_cmd_prompt() {
 
 	if [ $((${#r_prompt_no_ansi}+${#PWD}+${#command_time}+20)) -gt "$COLUMNS" ]; then  # if line to long
 		printf "\r[0;1;32m╭─"
-		[ -n "$l_git_line" ]   && printf "[1;32m╢$l_git_line[1;32m╟"
+		[ -n "$l_git_line" ]   && printf "[0;1;32m╢$l_git_line[0;1;32m╟"
 		printf "\n"
-		[ -n "$command_time" ] && printf "[0;1;32m├─ [0;32m[0;1;38;5;130m$command_time\n"
+		[ -n "$command_time" ] && printf "[0;1;32m├─ [0;1;38;5;130m$command_time\n"
 		printf "[0;1;32m├─ [0;32m[0;38;5;246m$PWD\n"
 		RPS1="%{[0;38;5;246m%}%~%{[0m%}"
 	else  # line not to long
 		[ -n "$command_time" ] && command_time="\e[0;1;32m─\e[0;1;38;5;130m $command_time "
-		[ -n "$l_git_line" ]   && l_git_line="[1;32m───╢$l_git_line[1;32m╟"
+		[ -n "$l_git_line" ]   && l_git_line="[1;32m───╢$l_git_line[0;1;32m╟"
 		printf "\r\e[0;1;32m╭─\e[0m \e[0;38;5;246m${PWD} $l_git_line$command_time\e[0m\n" "$h" "$m" "$s"
 		RPS1="%{[0;38;5;246m%}%~%{[0m%} %D{%H:%M:%S}"
 	fi
